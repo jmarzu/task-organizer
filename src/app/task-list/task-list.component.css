@@ -1,0 +1,23 @@
+.nav {
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  background-color: rgba(0,0,0,.05);
+  padding: 15px;
+}
+
+.empty-list {
+  position: relative;
+  height: 200px;
+}
+
+.empty-list p {
+  position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.header-container {
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+}
