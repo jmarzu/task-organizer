@@ -23,7 +23,7 @@ export class TaskListComponent implements OnInit {
       name: taskForm.value.name,
       bucket: taskForm.value.bucket,
       created: this._todaysDate(),
-      // dueDate: this._normalizeDueDate(taskForm.value.dueDate)
+      dueDate: this._normalizeDueDate(taskForm.value.dueDate)
     };
 
     this.taskList.push(addedTask);
@@ -59,8 +59,22 @@ export class TaskListComponent implements OnInit {
     return today = mm + '/' + dd + '/' + yyyy;
   }
 
-  _normalizeDueDate(dueDate) {
-    return `${dueDate.month}/${dueDate.day}/${dueDate.year}`;
+  _setDateInOneWeek() {
+    const today = new Date();
+    const dd = String(today.getDate() + 7).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const nextweek = mm + '/' + dd + '/' + yyyy;
+
+    return nextweek;
   }
 
+  _normalizeDueDate(date) {
+    // if not action taken for a due date, set date for 1 week out
+    if (date && date.month && date.day && date.year) {
+      return `${date.month}/${date.day}/${date.year}`;
+    } else {
+      return this._setDateInOneWeek();
+    }
+  }
 }

@@ -7,20 +7,18 @@
         <div class="form-group mr-3">
           <input type="text" name="name" [(ngModel)]="task.name" class="form-control" placeholder="New Task">
         </div>
-        <select class="form-control mr-3" [(ngModel)]="task.bucket" name="bucket" placeholder="">
-          <option *ngFor="let bucket of buckets" [value]="bucket">{{bucket}}</option>
+        <select class="form-control mr-3" [(ngModel)]="task.bucket" name="bucket">
+          <option value="" selected disabled hidden>Choose here</option>
+          <option value="work">Work</option>
+          <option value="music">Music</option>
+          <option value="chores">Chores</option>
+          <option value="mics">Mics</option>
         </select>
 
-        <!-- <label class="input-group-append mr-3" (click)="d.toggle()">
+        <label class="input-group-append mr-3" (click)="d.toggle()">
           <input class="form-control" placeholder="yyyy-mm-dd"
                name="dueDate" [(ngModel)]="task.dueDate" ngbDatepicker #d="ngbDatepicker">
-        </label> -->
-
-        <!-- <input class="form-control" placeholder="yyyy-mm-dd"
-             name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-      </div> -->
+        </label>
 
         <button type="submit" class="btn btn-primary mr-3">Add to list</button>
       </form>
@@ -36,7 +34,7 @@
 
   <table class="table table-bordered table-striped">
     <thead>
-      <th>Task</th>
+      <th>Task Name</th>
       <th>Created</th>
       <th>Complete Task By</th>
       <th>Bucket</th>
@@ -47,7 +45,7 @@
         <td>{{task.name}}</td>
         <td>{{task.created}}</td>
         <td>{{task.dueDate}}</td>
-        <td>{{task.bucket}}</td>
+        <td class="text-capitalize">{{task.bucket}}</td>
         <td class="text-right">
           <button class="btn btn-success mr-2">Edit</button>
           <button class="btn btn-danger" (click)="removeTask(task)">Remove</button>
