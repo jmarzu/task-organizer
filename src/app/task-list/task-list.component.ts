@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  defaultFormData = { name: '', created: this._todaysDate(), dueDate: null, bucket: '' };
+  defaultFormData: Task = { name: '', created: null, dueDate: null, bucket: '' };
   protected task: Task = { ...this.defaultFormData };
   protected buckets = [ 'Work', 'Music', 'Grocery Store', 'Misc' ];
   public taskList: any = [];
@@ -21,13 +21,15 @@ export class TaskListComponent implements OnInit {
   addTask(taskForm: NgForm) {
     const addedTask = {
       name: taskForm.value.name,
-      bucket: taskForm.value.bucket,
+      bucket: taskForm.value.bucket || 'General',
       created: this._todaysDate(),
       dueDate: this._normalizeDueDate(taskForm.value.dueDate)
     };
 
-    this.taskList.push(addedTask);
-    this.clearTask();
+    if (taskForm.valid) {
+      this.taskList.push(addedTask);
+      this.clearTask();
+    }
   }
 
   clearTask() {
@@ -39,7 +41,7 @@ export class TaskListComponent implements OnInit {
   }
 
   removeTask(task) {
-    this.taskList = this.taskList.filter(i => i !== task);
+    this.taskList = this.taskList.filter(i => i.name !== task.name);
   }
 
   viewOnCalendar() {

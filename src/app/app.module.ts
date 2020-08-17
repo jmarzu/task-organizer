@@ -6,11 +6,15 @@ import { AppComponent } from './app.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TetrisComponent } from './tetris/tetris.component';
+import { TaskCalendarComponent } from './task-calendar/task-calendar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskListComponent
+    TaskListComponent,
+    TetrisComponent,
+    TaskCalendarComponent
   ],
   imports: [
     BrowserModule,
