@@ -8,19 +8,24 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TetrisComponent } from './tetris/tetris.component';
 import { TaskCalendarComponent } from './task-calendar/task-calendar.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { EditTaskComponent } from './modals/edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskListComponent,
     TetrisComponent,
-    TaskCalendarComponent
+    TaskCalendarComponent,
+    EditTaskComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [],
   bootstrap: [AppComponent]

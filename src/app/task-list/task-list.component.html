@@ -9,16 +9,13 @@
                   name="name"
                   [(ngModel)]="task.name"
                   class="form-control"
-                  required
                   #nameField="ngModel"
                   placeholder="New Task"
-                  [class.field-error]="taskForm.submitted && nameField.invalid">
+                  >
 
-          <div [hidden]="nameField.valid || nameField.untouched"
-              class="alert alert-danger"
-          >
+          <!-- <div [hidden]="nameField.valid || nameField.untouched" class="alert alert-danger">
             Enter a Task Name
-          </div>
+          </div> -->
         </div>
         <select class="form-control mr-3" [(ngModel)]="task.bucket" name="bucket">
           <option value="" selected disabled hidden>Choose here</option>
@@ -28,10 +25,14 @@
           <option value="general">General</option>
         </select>
 
-        <label class="input-group-append mr-3" (click)="d.toggle()">
-          <input class="form-control" placeholder="yyyy-mm-dd"
-               name="dueDate" [(ngModel)]="task.dueDate" ngbDatepicker #d="ngbDatepicker">
-        </label>
+        <div class="form-group mr-3">
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker" [(ngModel)]="task.dueDate">
+            <div class="input-group-append">
+              <button class="btn btn-secondary calendar" (click)="dp.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div>
 
         <button type="submit" class="btn btn-primary mr-3" [disabled]="!task.name">Add to list</button>
       </form>
@@ -60,7 +61,7 @@
         <td>{{task.dueDate}}</td>
         <td class="text-capitalize">{{task.bucket}}</td>
         <td class="text-right">
-          <button class="btn btn-success mr-2">Edit</button>
+          <button class="btn btn-success mr-2" (click)="open(content, task)">Edit</button>
           <button class="btn btn-danger" (click)="removeTask(task)">Remove</button>
         </td>
       </tr>
@@ -73,3 +74,55 @@
     </tbody>
   </table>
 </div>
+
+<ng-template #content let-modal>
+    <form #taskModalForm="ngForm" (ngSubmit)="addTask(taskForm)">
+
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Task: name</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <input  type="text"
+                  name="name"
+                  [(ngModel)]="task.name"
+                  class="form-control"
+                  #nameField="ngModel"
+                  placeholder="New Task"
+                  >
+
+          <!-- <div [hidden]="nameField.valid || nameField.untouched" class="alert alert-danger">
+            Enter a Task Name
+          </div> -->
+        </div>
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="task.bucket" name="bucket">
+            <option value="" selected disabled hidden>Choose here</option>
+            <option value="work">Work</option>
+            <option value="music">Music</option>
+            <option value="chores">Chores</option>
+            <option value="general">General</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker" [(ngModel)]="task.dueDate">
+            <div class="input-group-append">
+              <button class="btn btn-secondary calendar" (click)="dp.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!task.name">Add to list</button>
+      </div>
+
+  </form>
+</ng-template>

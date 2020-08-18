@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../task';
 import { NgForm } from '@angular/forms';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { EditTaskComponent } from '../modals/edit-task/edit-task.component';
 
 @Component({
   selector: 'app-task-list',
@@ -8,12 +10,13 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
+  closeResult = '';
   defaultFormData: Task = { name: '', created: null, dueDate: null, bucket: '' };
   protected task: Task = { ...this.defaultFormData };
   protected buckets = [ 'Work', 'Music', 'Grocery Store', 'Misc' ];
   public taskList: any = [];
 
-  constructor() { }
+  constructor(private modalService: NgbModal, editModal: EditTaskComponent) { }
 
   ngOnInit() {
   }
@@ -77,6 +80,25 @@ export class TaskListComponent implements OnInit {
       return `${date.month}/${date.day}/${date.year}`;
     } else {
       return this._setDateInOneWeek();
+    }
+  }
+
+  open(content, task) {
+    console.log(content, task);
+    this.modalService.open(EditTaskComponent).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
     }
   }
 }
