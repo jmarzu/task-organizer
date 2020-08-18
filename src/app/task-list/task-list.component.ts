@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../task';
 import { NgForm } from '@angular/forms';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EditTaskComponent } from '../modals/edit-task/edit-task.component';
 
 @Component({
@@ -11,32 +11,14 @@ import { EditTaskComponent } from '../modals/edit-task/edit-task.component';
 })
 export class TaskListComponent implements OnInit {
   closeResult = '';
-  defaultFormData: Task = { name: '', created: null, dueDate: null, bucket: '' };
-  protected task: Task = { ...this.defaultFormData };
+  defaultTaskData: Task = { name: '', created: null, dueDate: null, bucket: '' };
+  protected task: Task = { ...this.defaultTaskData };
   protected buckets = [ 'Work', 'Music', 'Grocery Store', 'Misc' ];
   public taskList: any = [];
 
-  constructor(private modalService: NgbModal, editModal: EditTaskComponent) { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
-  }
-
-  addTask(taskForm: NgForm) {
-    const addedTask = {
-      name: taskForm.value.name,
-      bucket: taskForm.value.bucket || 'General',
-      created: this._todaysDate(),
-      dueDate: this._normalizeDueDate(taskForm.value.dueDate)
-    };
-
-    if (taskForm.valid) {
-      this.taskList.push(addedTask);
-      this.clearTask();
-    }
-  }
-
-  clearTask() {
-    this.task = this.defaultFormData;
   }
 
   clearList() {
@@ -45,14 +27,6 @@ export class TaskListComponent implements OnInit {
 
   removeTask(task) {
     this.taskList = this.taskList.filter(i => i.name !== task.name);
-  }
-
-  viewOnCalendar() {
-    console.log('going to the calendar with the to-do-list tasks');
-  }
-
-  takeABreak() {
-    console.log('I took a break');
   }
 
   _todaysDate() {
@@ -66,10 +40,10 @@ export class TaskListComponent implements OnInit {
 
   _setDateInOneWeek() {
     const today = new Date();
-    const dd = String(today.getDate() + 7).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate() + 7).padStart(2);
+    const mm = String(today.getMonth() + 1).padStart(2);
     const yyyy = today.getFullYear();
-    const nextweek = mm + '/' + dd + '/' + yyyy;
+    const nextweek = { month: parseInt(mm), day: parseInt(dd), year: yyyy };
 
     return nextweek;
   }
@@ -83,13 +57,21 @@ export class TaskListComponent implements OnInit {
     }
   }
 
-  open(content, task) {
-    console.log(content, task);
-    this.modalService.open(EditTaskComponent).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  openEditTaskModal(task): NgbModalRef {
+    let modalInstance: NgbModalRef;
+    let componentInstance: EditTaskComponent;
+
+    modalInstance = this.modalService.open(EditTaskComponent);
+
+    modalInstance.componentInstance.task = task;
+    componentInstance = modalInstance.componentInstance;
+
+    modalInstance.result.then(result => {
+      console.log(result);
+      this.taskList.push(result);
     });
+
+    return modalInstance;
   }
 
   private getDismissReason(reason: any): string {

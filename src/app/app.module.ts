@@ -27,6 +27,9 @@ import { EditTaskComponent } from './modals/edit-task/edit-task.component';
     NgbModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
+  entryComponents: [
+    EditTaskComponent
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
