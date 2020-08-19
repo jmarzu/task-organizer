@@ -3,12 +3,12 @@
   <h3 class="my-3">Task List</h3>
   <div class="mb-3 nav">
     <div class="header-container">
-      <button type="button" class="btn btn-primary mr-3" (click)="openEditTaskModal(defaultTaskData)">Add Task</button>
+      <button type="button" class="btn btn-primary mr-3" (click)="openEditTaskModal()">New Task</button>
     </div>
 
     <div>
       <button (click)="clearList()" class="btn btn-secondary mr-3">Clear List</button>
-      <a [routerLink]="['/calendar']" class="btn btn-secondary mr-3">View On Calendar</a>
+      <a [routerLink]="['/calendar']" class="btn btn-secondary mr-3">View Calendar</a>
       <a [routerLink]="['/break-time']" class="btn btn-secondary">Take A Break</a>
     </div>
   </div>
@@ -28,6 +28,8 @@
         <td>{{task.dueDate.month}}/{{task.dueDate.day}}/{{task.dueDate.year}}</td>
         <td class="text-capitalize">{{task.bucket}}</td>
         <td class="text-right">
+          <!-- TODO: Add route param of task.id to view the task on the calendar -->
+          <a [routerLink]="['/calendar']" class="btn btn-secondary mr-3">View On Calendar</a>
           <button class="btn btn-success mr-2" (click)="openEditTaskModal(task)">Edit</button>
           <button class="btn btn-danger" (click)="removeTask(task)">Remove</button>
         </td>

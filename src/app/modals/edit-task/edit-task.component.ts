@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Task } from 'src/app/task';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-edit-task',
@@ -11,34 +12,40 @@ import { NgForm } from '@angular/forms';
 export class EditTaskComponent implements OnInit {
   @Input() task: Task;
 
+  formData: Task;
   editMode: boolean;
-  taskList: any = [];
+  buckets = [ 'Work', 'Music', 'Grocery Store', 'Misc' ];
 
   constructor(public modal: NgbActiveModal) { }
 
   ngOnInit() {
-    this.editMode = !!this.task.name;
+    this.formData = { ...this.task };
+    this.editMode = !!this.formData.id;
+
+    if (!this.formData.id) {
+      this.formData.id = Math.floor(Math.random() * 1000000);
+    }
   }
 
-  addTask(taskModalForm: NgForm) {
-    console.log('fired in modal', taskModalForm.value);
+  saveTask(taskModalForm: NgForm) {
     const addedTask = {
+      ...this.formData,
       name: taskModalForm.value.name,
       bucket: taskModalForm.value.bucket || 'General',
-      created: this._todaysDate(),
-      dueDate: taskModalForm.value.dueDate || this._normalizeDueDate(taskModalForm.value.dueDate)
+      created: this._normalizeDate(this.todaysDate()),
+      dueDate: taskModalForm.value.dueDate || this._normalizeDate(taskModalForm.value.dueDate)
     };
 
     this.modal.close(addedTask);
   }
 
-  _todaysDate() {
+  todaysDate() {
     let today: any = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
 
-    return today = mm + '/' + dd + '/' + yyyy;
+    return today = { month: parseInt(mm), day: parseInt(dd), year: yyyy };
   }
 
   _setDateInOneWeek() {
@@ -51,7 +58,7 @@ export class EditTaskComponent implements OnInit {
     return nextweek;
   }
 
-  _normalizeDueDate(date) {
+  _normalizeDate(date) {
     // if not action taken for a due date, set date for 1 week out
     if (date && date.month && date.day && date.year) {
       return `${date.month}/${date.day}/${date.year}`;
@@ -59,9 +66,4 @@ export class EditTaskComponent implements OnInit {
       return this._setDateInOneWeek();
     }
   }
-
-  passBack() {
-    this.modal.close(this.task);
-  }
-
 }
