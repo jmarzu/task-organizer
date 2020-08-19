@@ -7,7 +7,7 @@ import { TaskCalendarComponent } from './task-calendar/task-calendar.component';
 const routes: Routes = [
   { path: 'task-list', component: TaskListComponent },
   { path: 'break-time', component: TetrisComponent },
-  { path: 'calendar', component: TaskCalendarComponent },
+  { path: 'calendar/:id', component: TaskCalendarComponent },
   { path: '', redirectTo: 'task-list', pathMatch: 'full' },
   { path: '**', redirectTo: 'task-list', pathMatch: 'full' }
 ];

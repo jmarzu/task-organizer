@@ -8,8 +8,8 @@
 
     <div>
       <button (click)="clearList()" class="btn btn-secondary mr-3">Clear List</button>
-      <a [routerLink]="['/calendar']" class="btn btn-secondary mr-3">View Calendar</a>
-      <a [routerLink]="['/break-time']" class="btn btn-secondary">Take A Break</a>
+      <a routerLink="/calendar/0" class="btn btn-secondary mr-3">View Calendar</a>
+      <a routerLink="/break-time" class="btn btn-secondary">Take A Break</a>
     </div>
   </div>
   <div class="oi oi-ellipses"></div>
@@ -30,10 +30,14 @@
         <td class="text-capitalize">{{task.bucket}}</td>
         <td class="text-right" width="1%">
           <div ngbDropdown>
-            <button class="btn btn-outline-secondary" id="moreMenu" ngbDropdownToggle>More</button>
-            <div ngbDropdownMenu aria-labelledby="moreMenu">
-              <a ngbDropdownItem [routerLink]="['/calendar']" class="btn btn-secondary mr-2">View On Calendar</a>
-              <button ngbDropdownItem class="btn btn-success mr-2" (click)="openEditTaskModal(task)">Edit</button>
+            <a ngbDropdownToggle>
+              <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+              </svg>
+            </a>
+            <div ngbDropdownMenu>
+              <a ngbDropdownItem [routerLink]="['/calendar', task.id]" class="btn btn-secondary">View On Calendar</a>
+              <button ngbDropdownItem class="btn btn-success" (click)="openEditTaskModal(task)">Edit</button>
               <button ngbDropdownItem class="btn btn-danger" (click)="removeTask(task)">Remove</button>
             </div>
           </div>

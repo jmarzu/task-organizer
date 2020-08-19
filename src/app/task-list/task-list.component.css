@@ -16,3 +16,11 @@
 	top: 50%;
 	transform: translate(-50%, -50%);
 }
+
+.dropdown-toggle::after {
+  display:none;
+}
+
+a.dropdown-toggle {
+  color: black;
+}

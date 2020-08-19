@@ -12,6 +12,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { EditTaskComponent } from './modals/edit-task/edit-task.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditCalendarTaskComponent } from './modals/edit-calendar-task/edit-calendar-task.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     TetrisComponent,
     TaskCalendarComponent,
     EditTaskComponent,
+    EditCalendarTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,10 +30,12 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     FormsModule,
     NgbModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    BrowserAnimationsModule
   ],
   entryComponents: [
-    EditTaskComponent
+    EditTaskComponent,
+    EditCalendarTaskComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
