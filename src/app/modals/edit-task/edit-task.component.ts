@@ -14,7 +14,7 @@ export class EditTaskComponent implements OnInit {
 
   formData: Task;
   editMode: boolean;
-  buckets = [ 'Work', 'Music', 'Grocery Store', 'Misc' ];
+  buckets = [ 'Work', 'Music', 'Grocery Store', 'General' ];
 
   constructor(public modal: NgbActiveModal) { }
 

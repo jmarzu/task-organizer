@@ -11,6 +11,7 @@ import { TaskCalendarComponent } from './task-calendar/task-calendar.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { EditTaskComponent } from './modals/edit-task/edit-task.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -18,14 +19,15 @@ import { EditTaskComponent } from './modals/edit-task/edit-task.component';
     TaskListComponent,
     TetrisComponent,
     TaskCalendarComponent,
-    EditTaskComponent
+    EditTaskComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     NgbModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    AngularFontAwesomeModule
   ],
   entryComponents: [
     EditTaskComponent
