@@ -1,9 +1,8 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
-import { Task } from '../task';
 import { EditCalendarTaskComponent } from '../modals/edit-calendar-task/edit-calendar-task.component';
 
 const colors: any = {
@@ -27,7 +26,6 @@ const colors: any = {
   styleUrls: ['./task-calendar.component.css']
 })
 export class TaskCalendarComponent implements OnInit {
-  @Input() task: Task;
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
@@ -64,7 +62,7 @@ export class TaskCalendarComponent implements OnInit {
   events: CalendarEvent[] = [
     {
       start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
+      end: addDays(new Date(), 3),
       title: 'A 3 day event',
       color: colors.red,
       actions: this.actions,
@@ -137,7 +135,6 @@ export class TaskCalendarComponent implements OnInit {
 
   handleEvent(action: string, event: CalendarEvent): NgbModalRef {
     this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
 
     let modalInstance: NgbModalRef;
     let componentInstance: EditCalendarTaskComponent;
@@ -145,26 +142,27 @@ export class TaskCalendarComponent implements OnInit {
     modalInstance = this.modal.open(EditCalendarTaskComponent);
 
     componentInstance = modalInstance.componentInstance;
+    componentInstance.event = this.modalData.event;
 
     return modalInstance;
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
+  // addEvent(): void {
+  //   this.events = [
+  //     ...this.events,
+  //     {
+  //       title: 'New event',
+  //       start: startOfDay(new Date()),
+  //       end: endOfDay(new Date()),
+  //       color: colors.red,
+  //       draggable: true,
+  //       resizable: {
+  //         beforeStart: true,
+  //         afterEnd: true,
+  //       },
+  //     },
+  //   ];
+  // }
 
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);

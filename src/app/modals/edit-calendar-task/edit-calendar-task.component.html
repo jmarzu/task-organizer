@@ -6,10 +6,16 @@
 </div>
 
 <div class="modal-body">
-  the body
+  <ul>
+    <li>{{event.title}}</li>
+    <li>{{event.start | date}}</li>
+    <li>{{event.start | date}}</li>
+  </ul>
+
+  <form></form>
 </div>
 
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="modal.close('Cancel click')">Cancel</button>
-  <button type="submit" class="btn btn-primary">Save</button>
+  <button type="submit" class="btn btn-success">Save</button>
 </div>
