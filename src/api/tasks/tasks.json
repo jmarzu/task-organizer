@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "title": "Buy coffee",
+    "start": "",
+    "end": {
+      "day": 8,
+      "month": 12,
+      "year": 2020
+    },
+    "bucket": "Grocery Store"
+  },
+  {
+    "id": 2,
+    "title": "Finish Song",
+    "start": "",
+    "end": {
+      "day": 8,
+      "month": 11,
+      "year": 2020
+    },
+    "bucket": "Music"
+  },
+  {
+    "id": 3,
+    "title": "Play Show at Louie G's",
+    "start": "",
+    "end": {
+      "day": 5,
+      "month": 11,
+      "year": 2020
+    },
+    "bucket": "Music"
+  },
+  {
+    "id": 4,
+    "title": "Finish App",
+    "start": "",
+    "end": {
+      "day": 25,
+      "month": 12,
+      "year": 2020
+    },
+    "bucket": "Work"
+  },
+  {
+    "id": 5,
+    "title": "Buy steaks for BBQ",
+    "start": "",
+    "end": {
+      "day": 6,
+      "month": 10,
+      "year": 2020
+    },
+    "bucket": "Grocery Store"
+  }
+]

@@ -1,7 +1,9 @@
+import { AnimationQueryMetadata } from '@angular/animations';
+
 export interface Task {
   id?: number;
-  name?: string;
-  created?: string;
-  dueDate?: string;
+  title?: string;
+  start?: any;
+  end?: string;
   bucket?: string;
 }

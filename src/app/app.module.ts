@@ -14,6 +14,7 @@ import { EditTaskComponent } from './modals/edit-task/edit-task.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditCalendarTaskComponent } from './modals/edit-calendar-task/edit-calendar-task.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { EditCalendarTaskComponent } from './modals/edit-calendar-task/edit-cale
     NgbModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     AngularFontAwesomeModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   entryComponents: [
     EditTaskComponent,

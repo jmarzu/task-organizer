@@ -3,6 +3,7 @@ import { Task } from 'src/app/task';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import * as _ from 'lodash';
+import { UtilityService } from 'src/app/shared/utility.service';
 
 @Component({
   selector: 'app-edit-task',
@@ -16,7 +17,7 @@ export class EditTaskComponent implements OnInit {
   editMode: boolean;
   buckets = [ 'Work', 'Music', 'Grocery Store', 'General' ];
 
-  constructor(public modal: NgbActiveModal) { }
+  constructor(public modal: NgbActiveModal, private utilityService: UtilityService) { }
 
   ngOnInit() {
     this.formData = { ...this.task };
@@ -30,10 +31,10 @@ export class EditTaskComponent implements OnInit {
   saveTask(taskModalForm: NgForm) {
     const addedTask = {
       ...this.formData,
-      name: taskModalForm.value.name,
+      title: taskModalForm.value.title,
       bucket: taskModalForm.value.bucket || 'General',
-      created: this._normalizeDate(this.todaysDate()),
-      dueDate: taskModalForm.value.dueDate || this._normalizeDate(taskModalForm.value.dueDate)
+      start: this.utilityService.todaysDate(),
+      end: taskModalForm.value.end || this.utilityService.normalizeDate(taskModalForm.value.end)
     };
 
     this.modal.close(addedTask);

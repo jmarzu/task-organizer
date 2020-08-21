@@ -3,6 +3,8 @@ import { Task } from '../task';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EditTaskComponent } from '../modals/edit-task/edit-task.component';
 import * as _ from 'lodash';
+import { TaskListService } from './task-list.service';
+import { UtilityService } from '../shared/utility.service';
 
 @Component({
   selector: 'app-task-list',
@@ -10,13 +12,22 @@ import * as _ from 'lodash';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  defaultTaskData: Task = { name: '', created: null, dueDate: null, bucket: '' };
+  defaultTaskData: Task = { title: '', start: null, end: null, bucket: '' };
   protected task: Task = { ...this.defaultTaskData };
-  public taskList: any = [];
+  public taskList: Task[] = [];
+  errorMessage: any;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private taskService: TaskListService, private utilityService: UtilityService) { }
 
   ngOnInit() {
+    this.taskService.getTasks().subscribe(
+      tasks => {
+        this.taskList = tasks;
+      },
+      error => this.errorMessage = error
+    );
+
+    // this.taskList.forEach(task => task.start = this.utilityService.todaysDate());
   }
 
   clearList() {
@@ -24,7 +35,7 @@ export class TaskListComponent implements OnInit {
   }
 
   removeTask(task) {
-    this.taskList = this.taskList.filter(i => i.name !== task.name);
+    this.taskList = this.taskList.filter(i => i.id !== task.id);
   }
 
   openEditTaskModal(task): NgbModalRef {

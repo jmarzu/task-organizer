@@ -16,7 +16,7 @@
 
   <table class="table table-bordered table-striped">
     <thead>
-      <th>Task Name</th>
+      <th>Task</th>
       <th>Created</th>
       <th>Complete Task By</th>
       <th>Bucket</th>
@@ -24,9 +24,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let task of taskList">
-        <td>{{task.name}}</td>
-        <td>{{task.created}}</td>
-        <td>{{task.dueDate.month}}/{{task.dueDate.day}}/{{task.dueDate.year}}</td>
+        <td>{{task.title}}</td>
+        <td>{{task.start.month}}/{{task.start.day}}/{{task.start.year}}</td>
+        <td>{{task.end.month}}/{{task.end.day}}/{{task.end.year}}</td>
         <td class="text-capitalize">{{task.bucket}}</td>
         <td class="text-right" width="1%">
           <div ngbDropdown>
