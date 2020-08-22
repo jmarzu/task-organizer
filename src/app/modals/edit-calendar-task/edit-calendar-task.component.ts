@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { InvokeFunctionExpr } from '@angular/compiler';
 import { CalendarEvent } from 'angular-calendar';
 import { Subject } from 'rxjs';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UtilityService } from 'src/app/shared/utility.service';
 
 @Component({
@@ -13,12 +13,13 @@ import { UtilityService } from 'src/app/shared/utility.service';
 })
 export class EditCalendarTaskComponent implements OnInit {
 
-  constructor(private modal: NgbActiveModal, private utilityService: UtilityService) { }
+  constructor(private modal: NgbActiveModal, private utilityService: UtilityService, private fb: FormBuilder) { }
   @Input() event: CalendarEvent;
   events: CalendarEvent[];
   modalTitle: string;
 
   formData = { ...this.event };
+  editCalendarEventForm: FormGroup;
 
   refresh: Subject<any> = new Subject();
 
@@ -26,9 +27,29 @@ export class EditCalendarTaskComponent implements OnInit {
     console.log(this.event);
     this.event && this.event.id ? this.modalTitle = `Edit ${this.event.title}` : 'Create Task';
     // this.formData.start = this.utilityService.todaysDate();
+
+    this.initForm();
   }
 
-  saveCalendarEvent(form: NgForm) {
+  initForm() {
+    let title = '';
+    let start = new Date();
+    let end = new Date();
+
+    if (this.event.title) {
+      title = this.event.title;
+      start = this.event.start;
+      end = this.event.end;
+    }
+
+    this.editCalendarEventForm = this.fb.group({
+      title: [ title, Validators.required ],
+      start: [ start ],
+      end: [ end ]
+    });
+  }
+
+  saveCalendarEvent(form: FormGroup) {
     console.log(form.value);
   }
 
