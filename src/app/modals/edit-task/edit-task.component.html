@@ -1,4 +1,4 @@
-<form #taskModalForm="ngForm" (ngSubmit)="saveTask(taskModalForm)">
+<form [formGroup]="taskModalForm" (ngSubmit)="saveTask(taskModalForm)">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">{{editMode ? 'Edit' : 'Create'}} Task</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -10,13 +10,12 @@
     <div class="form-group">
       <input  type="text"
               name="title"
-              [(ngModel)]="formData.title"
+              formControlName="title"
               class="form-control"
-              #nameField="ngModel"
               placeholder="New Task">
     </div>
     <div class="form-group">
-      <select class="form-control" [(ngModel)]="formData.bucket" name="bucket">
+      <select class="form-control" formControlName="bucket" name="bucket">
         <option *ngFor="let bucket of buckets" value="{{bucket}}">{{bucket}}</option>
       </select>
     </div>
@@ -28,7 +27,7 @@
                name="end"
                ngbDatepicker
                #end="ngbDatepicker"
-               [(ngModel)]="formData.end"
+               formControlName="end"
                [minDate]="todaysDate()">
 
         <div class="input-group-append">

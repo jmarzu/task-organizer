@@ -1,18 +1,35 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Calendar Modal</h4>
+  <h4 class="modal-title" id="modal-basic-title">{{editMode ? 'Edit' : 'Create'}} Task</h4>
   <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 
 <div class="modal-body">
-  <ul>
-    <li>{{event.title}}</li>
-    <li>{{event.start | date}}</li>
-    <li>{{event.end | date}}</li>
-  </ul>
-
-  <form></form>
+  <form #editCalendarEventForm="ngForm" (onSubmit)="saveCalendarEvent(editCalendarEventForm)">
+    <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="event.title" name="title">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="event.color.primary" name="color.primary">
+    </div>
+    <div class="form-group">
+      <input class="form-control"
+               placeholder="Start Date"
+               name="start"
+               ngbDatepicker
+               #end="ngbDatepicker"
+               [(ngModel)]="event.start">
+    </div>
+    <div class="form-group">
+      <input class="form-control"
+               placeholder="End Date"
+               name="end"
+               ngbDatepicker
+               #end="ngbDatepicker"
+               [(ngModel)]="event.end">
+    </div>
+  </form>
 </div>
 
 <div class="modal-footer">

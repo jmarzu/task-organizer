@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { EditCalendarTaskComponent } from '../modals/edit-calendar-task/edit-calendar-task.component';
+import { UtilityService } from '../shared/utility.service';
 
 const colors: any = {
   red: {
@@ -102,15 +103,14 @@ export class TaskCalendarComponent implements OnInit {
 
   activeDayIsOpen = false;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal, private utilityService: UtilityService) {}
 
   ngOnInit(): void {
-    // throw new Error('Method not implemented.');
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
-      if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||events.length === 0) {
+      if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
         this.activeDayIsOpen = false;
       } else {
         this.activeDayIsOpen = true;
