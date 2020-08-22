@@ -29,10 +29,24 @@ export class EditTaskComponent implements OnInit {
       this.formData.id = Math.floor(Math.random() * 1000000);
     }
 
+    this.initForm();
+  }
+
+  private initForm(): void {
+    let title = '';
+    let end = '';
+    let bucket = '';
+
+    if (this.editMode) {
+      title = this.task.title;
+      end = this.task.end;
+      bucket = this.task.bucket;
+    }
+
     this.taskModalForm = this.fb.group({
-      title: [this.task.title || '', Validators.required],
-      end: [this.task.end || ''],
-      bucket: [this.task.bucket || ''],
+      title: [ title, Validators.required ],
+      end: [ end ],
+      bucket: [ bucket ],
     });
   }
 
@@ -46,5 +60,9 @@ export class EditTaskComponent implements OnInit {
     };
 
     this.modal.close(addedTask);
+  }
+
+  todaysDate() {
+    this.utilityService.normalizeDate(this.utilityService.todaysDate());
   }
 }
