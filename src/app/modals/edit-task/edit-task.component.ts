@@ -32,11 +32,7 @@ export class EditTaskComponent implements OnInit {
     this.initForm();
   }
 
-  private initForm(): void {
-    let title = '';
-    let end = '';
-    let bucket = '';
-
+  private initForm(title = '', end = '', bucket = ''): void {
     if (this.editMode) {
       title = this.task.title;
       end = this.task.end;

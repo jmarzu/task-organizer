@@ -31,11 +31,7 @@ export class EditCalendarTaskComponent implements OnInit {
     this.initForm();
   }
 
-  initForm() {
-    let title = '';
-    let start = new Date();
-    let end = new Date();
-
+  initForm(title = '', start = new Date(), end = new Date()) {
     if (this.event.title) {
       title = this.event.title;
       start = this.event.start;
