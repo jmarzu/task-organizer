@@ -25,8 +25,8 @@
     <tbody>
       <tr *ngFor="let task of taskList">
         <td>{{task.title}}</td>
-        <td>{{task.start.month}}/{{task.start.day}}/{{task.start.year}}</td>
-        <td>{{task.end.month}}/{{task.end.day}}/{{task.end.year}}</td>
+        <td>{{task.start | date}}</td>
+        <td>{{task.end | date}}</td>
         <td class="text-capitalize">{{task.bucket}}</td>
         <td class="text-right" width="1%">
           <div ngbDropdown>

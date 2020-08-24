@@ -1,9 +1,8 @@
 import { AnimationQueryMetadata } from '@angular/animations';
+import { CalendarEvent } from 'angular-calendar';
 
-export interface Task {
+export interface Task extends CalendarEvent {
   id?: number;
-  title?: string;
-  start?: any;
-  end?: string;
   bucket?: string;
+  datePickerDate?: { month: number, day: number, year: number };
 }

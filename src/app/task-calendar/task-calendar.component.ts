@@ -5,6 +5,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { EditCalendarTaskComponent } from '../modals/edit-calendar-task/edit-calendar-task.component';
 import { UtilityService } from '../shared/utility.service';
+import { TaskListService } from '../task-list/task-list.service';
 
 const colors: any = {
   red: {
@@ -34,78 +35,47 @@ export class TaskCalendarComponent implements OnInit {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
+  refresh: Subject<any> = new Subject();
 
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
+  eventList = [];
 
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
+        this.openEventModal(event);
       },
     },
     {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        this.eventList = this.eventList.filter((iEvent) => iEvent !== event);
+        this.openEventModal(event);
       },
-    },
-  ];
-
-  refresh: Subject<any> = new Subject();
-
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 3),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
     },
   ];
 
   activeDayIsOpen = false;
 
-  constructor(private modal: NgbModal, private utilityService: UtilityService) {}
+  constructor(
+    private modal: NgbModal,
+    private utilityService: UtilityService,
+    private taskService: TaskListService) {}
 
   ngOnInit(): void {
+    // Adding model props for start/end date
+    this.taskService.getTasks().subscribe(
+      tasks => {
+        tasks.forEach(task => {
+          task.actions = this.actions;
+          task.start = new Date();
+          task.end = new Date(2020, 9, 24, 10, 0, 0, 0);
+        });
+        this.eventList = this.eventList.concat(tasks);
+      }
+    );
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -120,7 +90,7 @@ export class TaskCalendarComponent implements OnInit {
   }
 
   eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
+    this.eventList = this.eventList.map((iEvent) => {
       if (iEvent === event) {
         return {
           ...event,
@@ -130,42 +100,31 @@ export class TaskCalendarComponent implements OnInit {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    this.openEventModal(event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): NgbModalRef {
-    this.modalData = { event, action };
-
+  openEventModal(event: CalendarEvent): NgbModalRef {
     let modalInstance: NgbModalRef;
     let componentInstance: EditCalendarTaskComponent;
 
     modalInstance = this.modal.open(EditCalendarTaskComponent);
 
     componentInstance = modalInstance.componentInstance;
-    componentInstance.event = this.modalData.event;
+    componentInstance.event = event;
+
+    modalInstance.result.then(data => {
+      console.log(data);
+    });
 
     return modalInstance;
   }
 
-  // addEvent(): void {
-  //   this.events = [
-  //     ...this.events,
-  //     {
-  //       title: 'New event',
-  //       start: startOfDay(new Date()),
-  //       end: endOfDay(new Date()),
-  //       color: colors.red,
-  //       draggable: true,
-  //       resizable: {
-  //         beforeStart: true,
-  //         afterEnd: true,
-  //       },
-  //     },
-  //   ];
-  // }
+  addEvent(): void {
+    // add event
+  }
 
   deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+    this.eventList = this.eventList.filter((event) => event !== eventToDelete);
   }
 
   setView(view: CalendarView) {

@@ -1,57 +1,100 @@
 [
   {
     "id": 1,
-    "title": "Buy coffee",
+    "title": "Test a new one from type",
+    "bucket": "Grocery Store",
     "start": "",
-    "end": {
-      "day": 8,
-      "month": 12,
-      "year": 2020
+    "end": "October 19, 2020 23:15:30",
+    "allDay": true,
+    "colors": {
+      "primary": "#ad2121",
+      "secondary": "#FAE3E3"
     },
-    "bucket": "Grocery Store"
+    "resizable": {
+      "beforeStart": true,
+      "afterEnd": true
+    },
+    "draggable": true
   },
   {
     "id": 2,
-    "title": "Finish Song",
+    "title": "Event with no end",
+    "bucket": "Grocery Store",
     "start": "",
-    "end": {
-      "day": 8,
-      "month": 11,
-      "year": 2020
-    },
-    "bucket": "Music"
+    "end": "",
+    "allDay": true,
+    "colors": {
+      "primary": "#1e90ff",
+      "secondary": "#D1E8FF"
+    }
   },
   {
     "id": 3,
-    "title": "Play Show at Louie G's",
+    "title": "A 3 day event",
+    "bucket": "Music",
     "start": "",
-    "end": {
-      "day": 5,
-      "month": 11,
-      "year": 2020
+    "end": "October 19, 2020 23:15:30",
+    "allDay": true,
+    "colors": {
+      "primary": "#e3bc08",
+      "secondary": "#FDF1BA"
     },
-    "bucket": "Music"
+    "resizable": {
+      "beforeStart": true,
+      "afterEnd": true
+    },
+    "draggable": true
   },
   {
     "id": 4,
-    "title": "Finish App",
-    "start": "",
-    "end": {
-      "day": 25,
-      "month": 12,
-      "year": 2020
+    "start": null,
+    "end": "September 19, 2020 23:15:30",
+    "title": "A 3 day event",
+    "color": {
+      "primary": "#ad2121",
+      "secondary": "#FAE3E3"
     },
-    "bucket": "Work"
+    "actions": null,
+    "allDay": true,
+    "resizable": {
+      "beforeStart": true,
+      "afterEnd": true
+    },
+    "draggable": true
   },
   {
     "id": 5,
-    "title": "Buy steaks for BBQ",
-    "start": "",
-    "end": {
-      "day": 6,
-      "month": 10,
-      "year": 2020
+    "start": null,
+    "title": "An event with no end date",
+    "color": {
+      "primary": "#1e90ff",
+      "secondary": "#D1E8FF"
+    }
+  },
+  {
+    "id": 6,
+    "start": null,
+    "end": "October 19, 2020 23:15:30",
+    "title": "A long event that spans 2 months",
+    "color": {
+      "primary": "#1e90ff",
+      "secondary": "#D1E8FF"
     },
-    "bucket": "Grocery Store"
+    "allDay": true
+  },
+  {
+    "id": 7,
+    "start": null,
+    "end": "September 19, 2020 23:15:30",
+    "title": "A draggable and resizable event",
+    "color": {
+      "primary": "#1e90ff",
+      "secondary": "#D1E8FF"
+    },
+    "resizable": {
+      "beforeStart": true,
+      "afterEnd": true
+    },
+    "draggable": true
   }
 ]

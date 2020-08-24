@@ -5,7 +5,6 @@ import { EditTaskComponent } from '../modals/edit-task/edit-task.component';
 import * as _ from 'lodash';
 import { TaskListService } from './task-list.service';
 import { UtilityService } from '../shared/utility.service';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-task-list',
@@ -17,8 +16,6 @@ export class TaskListComponent implements OnInit {
   protected task: Task = { ...this.defaultTaskData };
   public taskList: Task[] = [];
   errorMessage: any;
-
-  testName = new FormControl('');
 
   constructor(private modalService: NgbModal, private taskService: TaskListService, private utilityService: UtilityService) { }
 

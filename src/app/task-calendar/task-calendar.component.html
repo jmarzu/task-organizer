@@ -31,7 +31,10 @@
     </div>
     <div class="col-md-4">
       <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-      <a [routerLink]="['./task-list']">Back to Task List</a>
+      <div class="btn-group">
+          <a class="btn btn-primary" [routerLink]="['./task-list']">Back to Task List</a>
+          <a class="btn btn-primary" (click)="openEventModal({})">Create New Event</a>
+      </div>
     </div>
     <div class="col-md-4">
       <div class="btn-group">
@@ -64,29 +67,29 @@
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"
       [viewDate]="viewDate"
-      [events]="events"
+      [events]="eventList"
       [refresh]="refresh"
       [activeDayIsOpen]="activeDayIsOpen"
       (dayClicked)="dayClicked($event.day)"
-      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventClicked)="openEventModal($event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
     >
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
       *ngSwitchCase="CalendarView.Week"
       [viewDate]="viewDate"
-      [events]="events"
+      [events]="eventList"
       [refresh]="refresh"
-      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventClicked)="openEventModal($event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
       *ngSwitchCase="CalendarView.Day"
       [viewDate]="viewDate"
-      [events]="events"
+      [events]="eventList"
       [refresh]="refresh"
-      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventClicked)="openEventModal($event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
     >
     </mwl-calendar-day-view>

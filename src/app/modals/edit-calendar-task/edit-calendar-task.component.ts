@@ -24,9 +24,7 @@ export class EditCalendarTaskComponent implements OnInit {
   refresh: Subject<any> = new Subject();
 
   ngOnInit() {
-    console.log(this.event);
-    this.event && this.event.id ? this.modalTitle = `Edit ${this.event.title}` : 'Create Task';
-    // this.formData.start = this.utilityService.todaysDate();
+    this.event && this.event.id ? this.modalTitle = `Edit ${this.event.title}` : this.modalTitle = 'Create Task';
 
     this.initForm();
   }
