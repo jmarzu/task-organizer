@@ -1,0 +1,6 @@
+.form-field-container {
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  background-color: rgba(0,0,0,.05);
+  padding: 15px;
+}

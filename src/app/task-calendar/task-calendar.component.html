@@ -67,7 +67,7 @@
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"
       [viewDate]="viewDate"
-      [events]="eventList"
+      [events]="events"
       [refresh]="refresh"
       [activeDayIsOpen]="activeDayIsOpen"
       (dayClicked)="dayClicked($event.day)"
@@ -78,7 +78,7 @@
     <mwl-calendar-week-view
       *ngSwitchCase="CalendarView.Week"
       [viewDate]="viewDate"
-      [events]="eventList"
+      [events]="events"
       [refresh]="refresh"
       (eventClicked)="openEventModal($event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
@@ -87,7 +87,7 @@
     <mwl-calendar-day-view
       *ngSwitchCase="CalendarView.Day"
       [viewDate]="viewDate"
-      [events]="eventList"
+      [events]="events"
       [refresh]="refresh"
       (eventClicked)="openEventModal($event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"

@@ -24,8 +24,7 @@ export class EditTaskComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal,
     private utilityService: UtilityService,
-    private fb: FormBuilder,
-    private taskService: TaskListService) { }
+    private fb: FormBuilder) { }
 
   ngOnInit() {
     this.formData = { ...this.task };

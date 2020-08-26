@@ -5,6 +5,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UtilityService } from 'src/app/shared/utility.service';
+import { Task } from 'src/app/task';
 
 @Component({
   selector: 'app-edit-calendar-task',
@@ -14,7 +15,9 @@ import { UtilityService } from 'src/app/shared/utility.service';
 export class EditCalendarTaskComponent implements OnInit {
 
   constructor(private modal: NgbActiveModal, private utilityService: UtilityService, private fb: FormBuilder) { }
-  @Input() event: CalendarEvent;
+  @Input() event;
+  @Input() eventSeverity;
+
   events: CalendarEvent[];
   modalTitle: string;
 
@@ -25,6 +28,14 @@ export class EditCalendarTaskComponent implements OnInit {
 
   ngOnInit() {
     this.event && this.event.id ? this.modalTitle = `Edit ${this.event.title}` : this.modalTitle = 'Create Task';
+
+    if (!this.formData.id) {
+      this.formData.id = Math.floor(Math.random() * 1000000);
+    }
+
+    if (this.formData.end && !this.formData.datePickerDate) {
+      this.formData.datePickerDate = this.utilityService.normalizeDateForDatePicker(this.formData.end);
+    }
 
     this.initForm();
   }
