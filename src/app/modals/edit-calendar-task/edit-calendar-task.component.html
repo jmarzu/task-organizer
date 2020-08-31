@@ -8,7 +8,7 @@
 <div class="modal-body">
   <form [formGroup]="editCalendarEventForm" (onSubmit)="saveCalendarEvent(editCalendarEventForm)">
     <div class="form-group form-field-container">
-      <input type="text" class="form-control" formControlName="title">
+      <input type="text" class="form-control" formControlName="title" placeholder="Title">
     </div>
     <div class="form-group d-flex form-field-container">
       <input class="form-control"
@@ -17,11 +17,19 @@
                #start="ngbDatepicker"
                formControlName="start">
 
-      <input class="form-control"
+        <div class="input-group-append mr-1">
+          <button class="btn btn-secondary calendar" (click)="start.toggle()" type="button"></button>
+        </div>
+
+      <input class="form-control ml-1"
                placeholder="End Date"
                ngbDatepicker
                #end="ngbDatepicker"
                formControlName="end">
+
+      <div class="input-group-append">
+        <button class="btn btn-secondary calendar" (click)="end.toggle()" type="button"></button>
+      </div>
     </div>
     <div class="form-group d-flex justify-content-around form-field-container">
       <div class="form-check">
